@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DBprobnikModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_client" />
+          </Key>
+          <Property Name="Id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familyi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Passport_data" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Date_birthday" Type="date" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dolshosty">
+          <Key>
+            <PropertyRef Name="Id_dolshosty" />
+          </Key>
+          <Property Name="Id_dolshosty" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sotrudnik">
+          <Key>
+            <PropertyRef Name="Id_sotrudnik" />
+          </Key>
+          <Property Name="Id_sotrudnik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Familyi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Id_dolshosty" Type="int" Nullable="false" />
+          <Property Name="Id_tip_vhoda" Type="int" Nullable="false" />
+          <Property Name="Time_poslednego_vhoda" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_Status" />
+          </Key>
+          <Property Name="Id_Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tip_vhoda">
+          <Key>
+            <PropertyRef Name="Id_tip_vhoda" />
+          </Key>
+          <Property Name="Id_tip_vhoda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ysluga">
+          <Key>
+            <PropertyRef Name="Id_Ysluga" />
+          </Key>
+          <Property Name="Id_Ysluga" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kod_yslugi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stoimosty" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zakas">
+          <Key>
+            <PropertyRef Name="Id_zakas" />
+          </Key>
+          <Property Name="Id_zakas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_create" Type="date" Nullable="false" />
+          <Property Name="Kod_zakasa" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Time_zakasa" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Id_client" Type="int" Nullable="false" />
+          <Property Name="Time_prokat" Type="int" Nullable="false" />
+          <Property Name="Date_close" Type="date" />
+          <Property Name="Id_status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zakas_yslugi">
+          <Key>
+            <PropertyRef Name="Id_zakas_yslugi" />
+          </Key>
+          <Property Name="Id_zakas_yslugi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_ysluga" Type="int" Nullable="false" />
+          <Property Name="Id_Zakas" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Sotrudnik_Dolshosty">
+          <End Role="Dolshosty" Type="Self.Dolshosty" Multiplicity="1" />
+          <End Role="Sotrudnik" Type="Self.Sotrudnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolshosty">
+              <PropertyRef Name="Id_dolshosty" />
+            </Principal>
+            <Dependent Role="Sotrudnik">
+              <PropertyRef Name="Id_dolshosty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sotrudnik_Tip_vhoda">
+          <End Role="Tip_vhoda" Type="Self.Tip_vhoda" Multiplicity="1" />
+          <End Role="Sotrudnik" Type="Self.Sotrudnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tip_vhoda">
+              <PropertyRef Name="Id_tip_vhoda" />
+            </Principal>
+            <Dependent Role="Sotrudnik">
+              <PropertyRef Name="Id_tip_vhoda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id_client" />
+            </Principal>
+            <Dependent Role="Zakas">
+              <PropertyRef Name="Id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_Status" />
+            </Principal>
+            <Dependent Role="Zakas">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_yslugi_Ysluga">
+          <End Role="Ysluga" Type="Self.Ysluga" Multiplicity="1" />
+          <End Role="Zakas_yslugi" Type="Self.Zakas_yslugi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ysluga">
+              <PropertyRef Name="Id_Ysluga" />
+            </Principal>
+            <Dependent Role="Zakas_yslugi">
+              <PropertyRef Name="Id_ysluga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_yslugi_Zakas">
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="1" />
+          <End Role="Zakas_yslugi" Type="Self.Zakas_yslugi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zakas">
+              <PropertyRef Name="Id_zakas" />
+            </Principal>
+            <Dependent Role="Zakas_yslugi">
+              <PropertyRef Name="Id_Zakas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DBprobnikModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dolshosty" EntityType="Self.Dolshosty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sotrudnik" EntityType="Self.Sotrudnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tip_vhoda" EntityType="Self.Tip_vhoda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ysluga" EntityType="Self.Ysluga" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zakas" EntityType="Self.Zakas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zakas_yslugi" EntityType="Self.Zakas_yslugi" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Sotrudnik_Dolshosty" Association="Self.FK_Sotrudnik_Dolshosty">
+            <End Role="Dolshosty" EntitySet="Dolshosty" />
+            <End Role="Sotrudnik" EntitySet="Sotrudnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sotrudnik_Tip_vhoda" Association="Self.FK_Sotrudnik_Tip_vhoda">
+            <End Role="Tip_vhoda" EntitySet="Tip_vhoda" />
+            <End Role="Sotrudnik" EntitySet="Sotrudnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_Client" Association="Self.FK_Zakas_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Zakas" EntitySet="Zakas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_Status" Association="Self.FK_Zakas_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Zakas" EntitySet="Zakas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_yslugi_Ysluga" Association="Self.FK_Zakas_yslugi_Ysluga">
+            <End Role="Ysluga" EntitySet="Ysluga" />
+            <End Role="Zakas_yslugi" EntitySet="Zakas_yslugi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_yslugi_Zakas" Association="Self.FK_Zakas_yslugi_Zakas">
+            <End Role="Zakas" EntitySet="Zakas" />
+            <End Role="Zakas_yslugi" EntitySet="Zakas_yslugi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBprobnikModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_client" />
+          </Key>
+          <Property Name="Id_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familyi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Passport_data" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Zakas" Relationship="Self.FK_Zakas_Client" FromRole="Client" ToRole="Zakas" />
+        </EntityType>
+        <EntityType Name="Dolshosty">
+          <Key>
+            <PropertyRef Name="Id_dolshosty" />
+          </Key>
+          <Property Name="Id_dolshosty" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sotrudnik" Relationship="Self.FK_Sotrudnik_Dolshosty" FromRole="Dolshosty" ToRole="Sotrudnik" />
+        </EntityType>
+        <EntityType Name="Sotrudnik">
+          <Key>
+            <PropertyRef Name="Id_sotrudnik" />
+          </Key>
+          <Property Name="Id_sotrudnik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familyi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_dolshosty" Type="Int32" Nullable="false" />
+          <Property Name="Id_tip_vhoda" Type="Int32" Nullable="false" />
+          <Property Name="Time_poslednego_vhoda" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Dolshosty" Relationship="Self.FK_Sotrudnik_Dolshosty" FromRole="Sotrudnik" ToRole="Dolshosty" />
+          <NavigationProperty Name="Tip_vhoda" Relationship="Self.FK_Sotrudnik_Tip_vhoda" FromRole="Sotrudnik" ToRole="Tip_vhoda" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_Status" />
+          </Key>
+          <Property Name="Id_Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Zakas" Relationship="Self.FK_Zakas_Status" FromRole="Status" ToRole="Zakas" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tip_vhoda">
+          <Key>
+            <PropertyRef Name="Id_tip_vhoda" />
+          </Key>
+          <Property Name="Id_tip_vhoda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sotrudnik" Relationship="Self.FK_Sotrudnik_Tip_vhoda" FromRole="Tip_vhoda" ToRole="Sotrudnik" />
+        </EntityType>
+        <EntityType Name="Ysluga">
+          <Key>
+            <PropertyRef Name="Id_Ysluga" />
+          </Key>
+          <Property Name="Id_Ysluga" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Kod_yslugi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Stoimosty" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Zakas_yslugi" Relationship="Self.FK_Zakas_yslugi_Ysluga" FromRole="Ysluga" ToRole="Zakas_yslugi" />
+        </EntityType>
+        <EntityType Name="Zakas">
+          <Key>
+            <PropertyRef Name="Id_zakas" />
+          </Key>
+          <Property Name="Id_zakas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_create" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Kod_zakasa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time_zakasa" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Id_client" Type="Int32" Nullable="false" />
+          <Property Name="Time_prokat" Type="Int32" Nullable="false" />
+          <Property Name="Date_close" Type="DateTime" Precision="0" />
+          <Property Name="Id_status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Zakas_Client" FromRole="Zakas" ToRole="Client" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Zakas_Status" FromRole="Zakas" ToRole="Status" />
+          <NavigationProperty Name="Zakas_yslugi" Relationship="Self.FK_Zakas_yslugi_Zakas" FromRole="Zakas" ToRole="Zakas_yslugi" />
+        </EntityType>
+        <EntityType Name="Zakas_yslugi">
+          <Key>
+            <PropertyRef Name="Id_zakas_yslugi" />
+          </Key>
+          <Property Name="Id_zakas_yslugi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_ysluga" Type="Int32" Nullable="false" />
+          <Property Name="Id_Zakas" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ysluga" Relationship="Self.FK_Zakas_yslugi_Ysluga" FromRole="Zakas_yslugi" ToRole="Ysluga" />
+          <NavigationProperty Name="Zakas" Relationship="Self.FK_Zakas_yslugi_Zakas" FromRole="Zakas_yslugi" ToRole="Zakas" />
+        </EntityType>
+        <Association Name="FK_Zakas_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id_client" />
+            </Principal>
+            <Dependent Role="Zakas">
+              <PropertyRef Name="Id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sotrudnik_Dolshosty">
+          <End Role="Dolshosty" Type="Self.Dolshosty" Multiplicity="1" />
+          <End Role="Sotrudnik" Type="Self.Sotrudnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolshosty">
+              <PropertyRef Name="Id_dolshosty" />
+            </Principal>
+            <Dependent Role="Sotrudnik">
+              <PropertyRef Name="Id_dolshosty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sotrudnik_Tip_vhoda">
+          <End Role="Tip_vhoda" Type="Self.Tip_vhoda" Multiplicity="1" />
+          <End Role="Sotrudnik" Type="Self.Sotrudnik" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tip_vhoda">
+              <PropertyRef Name="Id_tip_vhoda" />
+            </Principal>
+            <Dependent Role="Sotrudnik">
+              <PropertyRef Name="Id_tip_vhoda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_Status" />
+            </Principal>
+            <Dependent Role="Zakas">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_yslugi_Ysluga">
+          <End Role="Ysluga" Type="Self.Ysluga" Multiplicity="1" />
+          <End Role="Zakas_yslugi" Type="Self.Zakas_yslugi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ysluga">
+              <PropertyRef Name="Id_Ysluga" />
+            </Principal>
+            <Dependent Role="Zakas_yslugi">
+              <PropertyRef Name="Id_ysluga" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zakas_yslugi_Zakas">
+          <End Role="Zakas" Type="Self.Zakas" Multiplicity="1" />
+          <End Role="Zakas_yslugi" Type="Self.Zakas_yslugi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zakas">
+              <PropertyRef Name="Id_zakas" />
+            </Principal>
+            <Dependent Role="Zakas_yslugi">
+              <PropertyRef Name="Id_Zakas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="igoraDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Dolshosty" EntityType="Self.Dolshosty" />
+          <EntitySet Name="Sotrudnik" EntityType="Self.Sotrudnik" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tip_vhoda" EntityType="Self.Tip_vhoda" />
+          <EntitySet Name="Ysluga" EntityType="Self.Ysluga" />
+          <EntitySet Name="Zakas" EntityType="Self.Zakas" />
+          <EntitySet Name="Zakas_yslugi" EntityType="Self.Zakas_yslugi" />
+          <AssociationSet Name="FK_Zakas_Client" Association="Self.FK_Zakas_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Zakas" EntitySet="Zakas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sotrudnik_Dolshosty" Association="Self.FK_Sotrudnik_Dolshosty">
+            <End Role="Dolshosty" EntitySet="Dolshosty" />
+            <End Role="Sotrudnik" EntitySet="Sotrudnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sotrudnik_Tip_vhoda" Association="Self.FK_Sotrudnik_Tip_vhoda">
+            <End Role="Tip_vhoda" EntitySet="Tip_vhoda" />
+            <End Role="Sotrudnik" EntitySet="Sotrudnik" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_Status" Association="Self.FK_Zakas_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Zakas" EntitySet="Zakas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_yslugi_Ysluga" Association="Self.FK_Zakas_yslugi_Ysluga">
+            <End Role="Ysluga" EntitySet="Ysluga" />
+            <End Role="Zakas_yslugi" EntitySet="Zakas_yslugi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zakas_yslugi_Zakas" Association="Self.FK_Zakas_yslugi_Zakas">
+            <End Role="Zakas" EntitySet="Zakas" />
+            <End Role="Zakas_yslugi" EntitySet="Zakas_yslugi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBprobnikModelContainer" CdmEntityContainer="igoraDb">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="DBprobnikModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id_client" ColumnName="Id_client" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Familyi" ColumnName="Familyi" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Passport_data" ColumnName="Passport_data" />
+                <ScalarProperty Name="Date_birthday" ColumnName="Date_birthday" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dolshosty">
+            <EntityTypeMapping TypeName="DBprobnikModel.Dolshosty">
+              <MappingFragment StoreEntitySet="Dolshosty">
+                <ScalarProperty Name="Id_dolshosty" ColumnName="Id_dolshosty" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sotrudnik">
+            <EntityTypeMapping TypeName="DBprobnikModel.Sotrudnik">
+              <MappingFragment StoreEntitySet="Sotrudnik">
+                <ScalarProperty Name="Id_sotrudnik" ColumnName="Id_sotrudnik" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Familyi" ColumnName="Familyi" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Id_dolshosty" ColumnName="Id_dolshosty" />
+                <ScalarProperty Name="Id_tip_vhoda" ColumnName="Id_tip_vhoda" />
+                <ScalarProperty Name="Time_poslednego_vhoda" ColumnName="Time_poslednego_vhoda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="DBprobnikModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBprobnikModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tip_vhoda">
+            <EntityTypeMapping TypeName="DBprobnikModel.Tip_vhoda">
+              <MappingFragment StoreEntitySet="Tip_vhoda">
+                <ScalarProperty Name="Id_tip_vhoda" ColumnName="Id_tip_vhoda" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ysluga">
+            <EntityTypeMapping TypeName="DBprobnikModel.Ysluga">
+              <MappingFragment StoreEntitySet="Ysluga">
+                <ScalarProperty Name="Id_Ysluga" ColumnName="Id_Ysluga" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Kod_yslugi" ColumnName="Kod_yslugi" />
+                <ScalarProperty Name="Stoimosty" ColumnName="Stoimosty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zakas">
+            <EntityTypeMapping TypeName="DBprobnikModel.Zakas">
+              <MappingFragment StoreEntitySet="Zakas">
+                <ScalarProperty Name="Id_zakas" ColumnName="Id_zakas" />
+                <ScalarProperty Name="Date_create" ColumnName="Date_create" />
+                <ScalarProperty Name="Kod_zakasa" ColumnName="Kod_zakasa" />
+                <ScalarProperty Name="Time_zakasa" ColumnName="Time_zakasa" />
+                <ScalarProperty Name="Id_client" ColumnName="Id_client" />
+                <ScalarProperty Name="Time_prokat" ColumnName="Time_prokat" />
+                <ScalarProperty Name="Date_close" ColumnName="Date_close" />
+                <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zakas_yslugi">
+            <EntityTypeMapping TypeName="DBprobnikModel.Zakas_yslugi">
+              <MappingFragment StoreEntitySet="Zakas_yslugi">
+                <ScalarProperty Name="Id_zakas_yslugi" ColumnName="Id_zakas_yslugi" />
+                <ScalarProperty Name="Id_ysluga" ColumnName="Id_ysluga" />
+                <ScalarProperty Name="Id_Zakas" ColumnName="Id_Zakas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

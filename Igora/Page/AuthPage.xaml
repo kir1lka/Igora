@@ -1,0 +1,70 @@
+﻿<Page x:Class="Igora.Page.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Igora.Page"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Вход в систему">
+
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Логин" Margin="0 0 0 10"/>
+                <TextBox x:Name="LoginTB" Margin="0 0 0 10"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="Пароль" Margin="0 0 0 10"/>
+                <PasswordBox x:Name="PasswordTB" Margin="0 0 0 10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
+                <Grid Width="250" Height="80">
+
+                    <StackPanel Orientation="Horizontal"
+                                x:Name="Symbols_panel"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+
+                    <Canvas x:Name="Noise_Canvas">
+
+
+                    </Canvas>
+
+                </Grid>
+
+                <Button Name="Update_Captcha_Button"
+                        VerticalAlignment="Center"
+                        Click="Update_Captcha_Button_Click"
+                        Content="Обновить">
+
+
+                </Button>
+
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="2"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0 0 0 10">
+
+
+                <TextBlock Text="Введите символы с картинки:"
+                           TextAlignment="Center"/>
+
+                <TextBox Width="150"
+                         x:Name="CapthaTextbox"
+                         VerticalContentAlignment="Center"/>
+
+            </StackPanel>
+            <Button Content="войти" x:Name="BtnLog" Click="Auth_click" Margin="0 0 0 10"/>
+        </StackPanel>
+    </Grid>
+</Page>
